@@ -1,0 +1,14 @@
+player_one:
+  name: Player One
+  email_address: player.one@test.de
+  password_digest: <%= BCrypt::Password.create("playerone") %>
+
+player_two:
+  name: Player Two
+  email_address: player.two@test.de
+  password_digest: <%= BCrypt::Password.create("playertwo") %>
+
+game_master:
+  name: Game Master
+  email_address: game.master@test.de
+  password_digest: <%= BCrypt::Password.create("gamemaster") %>

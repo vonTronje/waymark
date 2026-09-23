@@ -24,6 +24,7 @@
   </head>
 
   <body>
+    <%= render "layouts/navigation" if authenticated? %>
     <%= yield %>
   </body>
 </html>
