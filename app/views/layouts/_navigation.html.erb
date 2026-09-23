@@ -1,0 +1,9 @@
+<nav class="top-nav">
+  <div>
+    <%= link_to "Users", users_path %>
+  </div>
+  <div>
+    <span><%= Current.user.name %></span>
+    <%= button_to "Log out", session_path, method: :delete %>
+  </div>
+</nav>
