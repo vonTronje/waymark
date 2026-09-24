@@ -1,9 +1,9 @@
 <nav class="top-nav">
   <div>
-    <%= link_to "Users", users_path %>
+    <%= link_to "Users", users_path if policy(User).index? %>
   </div>
   <div>
-    <span><%= Current.user.name %></span>
+    <%= link_to Current.user.name, Current.user %>
     <%= button_to "Log out", session_path, method: :delete %>
   </div>
 </nav>

@@ -14,9 +14,9 @@ class UserPolicyTest < ActiveSupport::TestCase
     assert policy.destroy?
   end
 
-  test "user can index but not create or destroy" do
+  test "user cannot index, create, or destroy" do
     policy = UserPolicy.new(@player_one, User)
-    assert policy.index?
+    assert_not policy.index?
     assert_not policy.create?
     assert_not policy.destroy?
   end

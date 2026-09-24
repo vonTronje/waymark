@@ -8,18 +8,18 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "new redirects to root when signed in" do
+  test "new redirects to the user profile when signed in" do
     sign_in_as @user
 
     get new_session_path
 
-    assert_redirected_to root_path
+    assert_redirected_to user_path(@user)
   end
 
   test "create with valid credentials" do
     post session_path, params: { email_address: @user.email_address, password: "playerone" }
 
-    assert_redirected_to root_path
+    assert_redirected_to user_path(@user)
     assert cookies[:session_id]
   end
 
