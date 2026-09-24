@@ -56,4 +56,21 @@ class AuthorizableTest < ActiveSupport::TestCase
     assert_equal [ shared ], AuthorizableTestDocument.accessible_to(users(:player_two), as: :viewer).to_a
     assert_equal [ shared, other ], AuthorizableTestDocument.accessible_to(users(:admin)).order(:id)
   end
+
+  test "access_for returns the users share access" do
+    document = AuthorizableTestDocument.create!(title: "Notes")
+    document.shares.create!(user: users(:player_two), access: :editor)
+
+    assert_equal "owner", document.access_for(users(:player_one))
+    assert_equal "editor", document.access_for(users(:player_two))
+    assert_nil document.access_for(users(:game_master))
+  end
+
+  test "non_owner_access returns viewer and editor shares only" do
+    document = AuthorizableTestDocument.create!(title: "Notes")
+    viewer_share = document.shares.create!(user: users(:player_two), access: :viewer)
+    editor_share = document.shares.create!(user: users(:game_master), access: :editor)
+
+    assert_equal [ viewer_share, editor_share ].sort_by(&:id), document.non_owner_access.order(:id).to_a
+  end
 end

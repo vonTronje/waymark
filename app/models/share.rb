@@ -26,4 +26,8 @@ class Share < ApplicationRecord
   def self.owned
     where(access: "owner")
   end
+
+  def self.non_owner
+    where.not(access: "owner")
+  end
 end

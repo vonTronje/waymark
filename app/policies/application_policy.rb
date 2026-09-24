@@ -34,6 +34,10 @@ class ApplicationPolicy
     false
   end
 
+  def share?
+    record.is_a?(Authorizable) && access?(:owner)
+  end
+
   class Scope
     def initialize(user, scope)
       @user = user

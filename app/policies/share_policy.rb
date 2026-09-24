@@ -1,14 +1,14 @@
 class SharePolicy < ApplicationPolicy
   def create?
-    admin_or_owner?
+    admin_or_owner? && !record.owner?
   end
 
   def update?
-    admin_or_owner?
+    admin_or_owner? && !record.owner?
   end
 
   def destroy?
-    admin_or_owner?
+    admin_or_owner? && !record.owner?
   end
 
   private
