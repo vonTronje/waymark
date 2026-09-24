@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, @entry.title %>
+
+<h1><%= @entry.title %></h1>
+
+<%= @entry.description %>
+
+<div>
+  <%= link_to "Edit this entry", edit_entry_path(@entry) if policy(@entry).edit? %>
+  <%= link_to "Back to entries", entries_path %>
+
+  <%= button_to "Destroy this entry", @entry, method: :delete if policy(@entry).destroy? %>
+</div>

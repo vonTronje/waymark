@@ -1,0 +1,15 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Entries" %>
+
+<h1>Entries</h1>
+
+<div id="entries">
+  <% @entries.each do |entry| %>
+    <p>
+      <%= link_to entry.title, entry %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New entry", new_entry_path %>
