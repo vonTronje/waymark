@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include Authentication
   include Pundit::Authorization
 
-  after_action :verify_authorized, except: :index
+  after_action :verify_authorized
   after_action :verify_policy_scoped, only: :index
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
@@ -19,6 +19,6 @@ class ApplicationController < ActionController::Base
     end
 
     def user_not_authorized
-      redirect_back_or_to root_path, alert: "You are not authorized to perform this action."
+      redirect_back_or_to user_path(Current.user), alert: "You are not authorized to perform this action."
     end
 end

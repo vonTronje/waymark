@@ -1,14 +1,14 @@
 require "application_system_test_case"
 
 class SessionsTest < ApplicationSystemTestCase
-  test "signing in redirects to the app and shows the navigation" do
-    visit root_path
-    assert_current_path new_session_path
+  test "signing in redirects to the profile and shows the navigation" do
+    visit new_session_path
 
     sign_in_as_game_master
 
-    assert_current_path root_path
+    assert_current_path user_path(users(:game_master))
     assert_selector "nav", text: "Game Master"
+    assert_no_link "Users"
   end
 
   test "signing in with a wrong password shows an error" do

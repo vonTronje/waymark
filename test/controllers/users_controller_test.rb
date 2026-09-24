@@ -14,11 +14,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "user can get index" do
+  test "user cannot get index" do
     sign_in_as @player_one
 
     get users_url
-    assert_response :success
+    assert_redirected_to user_path(@player_one)
   end
 
   test "admin can get new" do
@@ -32,7 +32,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     sign_in_as @player_one
 
     get new_user_url
-    assert_redirected_to root_path
+    assert_redirected_to user_path(@player_one)
   end
 
   test "admin can create user" do
@@ -52,7 +52,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       post users_url, params: { user: { name: "New Player", email_address: "new.player@test.de", password: "newplayer" } }
     end
 
-    assert_redirected_to root_path
+    assert_redirected_to user_path(@player_one)
   end
 
   test "admin can show any user" do
@@ -73,7 +73,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     sign_in_as @player_one
 
     get user_url(@player_two)
-    assert_redirected_to root_path
+    assert_redirected_to user_path(@player_one)
   end
 
   test "admin can get edit for any user" do
@@ -94,7 +94,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     sign_in_as @player_one
 
     get edit_user_url(@player_two)
-    assert_redirected_to root_path
+    assert_redirected_to user_path(@player_one)
   end
 
   test "admin can update any user" do
@@ -117,7 +117,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     sign_in_as @player_one
 
     patch user_url(@player_two), params: { user: { name: "Updated" } }
-    assert_redirected_to root_path
+    assert_redirected_to user_path(@player_one)
     assert_equal "Player Two", @player_two.reload.name
   end
 
@@ -138,6 +138,6 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
       delete user_url(@player_two)
     end
 
-    assert_redirected_to root_path
+    assert_redirected_to user_path(@player_one)
   end
 end
