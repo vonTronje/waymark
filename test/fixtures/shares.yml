@@ -1,0 +1,29 @@
+player_one_character_notes_owner:
+  user: player_one
+  shareable: player_one_character_notes (Entry)
+  access: owner
+
+player_one_shared_view_owner:
+  user: player_one
+  shareable: player_one_shared_view (Entry)
+  access: owner
+
+player_two_shared_view_viewer:
+  user: player_two
+  shareable: player_one_shared_view (Entry)
+  access: viewer
+
+player_one_shared_edit_owner:
+  user: player_one
+  shareable: player_one_shared_edit (Entry)
+  access: owner
+
+player_two_shared_edit_editor:
+  user: player_two
+  shareable: player_one_shared_edit (Entry)
+  access: editor
+
+player_two_secret_owner:
+  user: player_two
+  shareable: player_two_secret (Entry)
+  access: owner

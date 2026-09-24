@@ -8,6 +8,7 @@ class NavigationTest < ActionDispatch::IntegrationTest
     get user_path(game_master)
 
     assert_select "nav" do
+      assert_select "a[href=?]", entries_path, text: "Entries"
       assert_select "a[href=?]", users_path, text: "Users", count: 0
       assert_select "a[href=?]", user_path(game_master), text: "Game Master"
       assert_select "form[action=?]", session_path do
@@ -24,6 +25,7 @@ class NavigationTest < ActionDispatch::IntegrationTest
     get user_path(admin)
 
     assert_select "nav" do
+      assert_select "a[href=?]", entries_path, text: "Entries"
       assert_select "a[href=?]", users_path, text: "Users"
       assert_select "a[href=?]", user_path(admin), text: "Admin"
     end
