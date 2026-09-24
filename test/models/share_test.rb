@@ -12,4 +12,8 @@ class ShareTest < ActiveSupport::TestCase
   test "owned includes only owner" do
     assert_includes Share.owned.to_sql, "\"access\" = 'owner'"
   end
+
+  test "non_owner excludes owner access" do
+    assert_includes Share.non_owner.to_sql, "\"access\" != 'owner'"
+  end
 end

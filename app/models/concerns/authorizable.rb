@@ -12,6 +12,14 @@ module Authorizable
     shares.where(user: user).merge(Share.for_access(as)).exists?
   end
 
+  def access_for(user)
+    shares.find_by(user: user)&.access
+  end
+
+  def non_owner_access
+    shares.non_owner
+  end
+
   class_methods do
     def accessible_to(user, as: :viewer)
       return all if user.admin?

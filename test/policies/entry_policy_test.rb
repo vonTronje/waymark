@@ -55,6 +55,28 @@ class EntryPolicyTest < ActiveSupport::TestCase
     assert policy.destroy?
   end
 
+  test "admin can share an entry" do
+    assert EntryPolicy.new(users(:admin), @entry).share?
+  end
+
+  test "owner can share an entry" do
+    @entry.shares.create!(user: users(:player_one), access: :owner)
+
+    assert EntryPolicy.new(users(:player_one), @entry).share?
+  end
+
+  test "viewer cannot share an entry" do
+    @entry.shares.create!(user: users(:player_one), access: :viewer)
+
+    assert_not EntryPolicy.new(users(:player_one), @entry).share?
+  end
+
+  test "editor cannot share an entry" do
+    @entry.shares.create!(user: users(:player_one), access: :editor)
+
+    assert_not EntryPolicy.new(users(:player_one), @entry).share?
+  end
+
   test "scope includes accessible entries for a user and all for admin" do
     accessible_to_player_two = [
       entries(:player_one_shared_view),

@@ -25,12 +25,24 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "h1", text: "Character notes"
+    assert_select ".access-badge", text: "owner"
+    assert_select "#shares"
   end
 
   test "viewer can show an entry" do
     sign_in_as @player_two
 
     get entry_url(entries(:player_one_shared_view))
+
+    assert_response :success
+    assert_select ".access-badge", text: "viewer"
+    assert_select "#shares", count: 0
+  end
+
+  test "editor can edit an entry" do
+    sign_in_as @player_two
+
+    get edit_entry_url(entries(:player_one_shared_edit))
 
     assert_response :success
   end
@@ -74,14 +86,6 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to user_path(@player_two)
   end
 
-  test "editor can get edit" do
-    sign_in_as @player_two
-
-    get edit_entry_url(entries(:player_one_shared_edit))
-
-    assert_response :success
-  end
-
   test "owner can update an entry" do
     patch entry_url(@entry), params: { entry: { title: "Updated", description: "Changed" } }
 
@@ -89,6 +93,18 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
     @entry.reload
     assert_equal "Updated", @entry.title
     assert_equal "Changed", @entry.description.to_plain_text
+  end
+
+  test "editor can update an entry" do
+    entry = entries(:player_one_shared_edit)
+    sign_in_as @player_two
+
+    patch entry_url(entry), params: { entry: { title: "Edited by editor", description: "Changed" } }
+
+    assert_redirected_to entry_url(entry)
+    entry.reload
+    assert_equal "Edited by editor", entry.title
+    assert_equal "Changed", entry.description.to_plain_text
   end
 
   test "viewer cannot update an entry" do

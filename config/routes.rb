@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  resources :entries
+  concern :shareable do
+    resources :shares, only: %i[create update destroy]
+  end
+
+  resources :entries, concerns: :shareable
   resources :users
   resource :session
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

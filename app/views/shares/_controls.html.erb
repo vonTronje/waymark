@@ -1,0 +1,36 @@
+<% if policy(shareable).share? %>
+  <section id="shares">
+    <h2>Sharing</h2>
+
+    <div id="share-list">
+      <% shareable.non_owner_access.each do |share| %>
+        <div id="<%= dom_id(share) %>">
+          <span><%= share.user.name %></span>
+
+          <%= form_with model: share, url: [ shareable, share ] do |form| %>
+            <%= form.select :access, [["Viewer", "viewer"], ["Editor", "editor"]] %>
+            <%= form.submit "Update access" %>
+          <% end %>
+
+          <%= button_to "Remove", [ shareable, share ], method: :delete %>
+        </div>
+      <% end %>
+    </div>
+
+    <% users_without_access = User.without_access(shareable) %>
+    <% if users_without_access.any? %>
+      <h3>Add share</h3>
+      <%= form_with model: Share.new, url: [ shareable, Share.new ] do |form| %>
+        <div>
+          <%= form.label :user_id, "User" %>
+          <%= form.collection_select :user_id, users_without_access, :id, :name %>
+        </div>
+        <div>
+          <%= form.label :access, "Access" %>
+          <%= form.select :access, [["Viewer", "viewer"], ["Editor", "editor"]] %>
+        </div>
+        <%= form.submit "Share" %>
+      <% end %>
+    <% end %>
+  </section>
+<% end %>

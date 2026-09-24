@@ -53,4 +53,35 @@ class SharePolicyTest < ActiveSupport::TestCase
     assert policy.update?
     assert policy.destroy?
   end
+
+  test "owner cannot update or destroy an owner share" do
+    owner_share = @document.shares.find_by!(user: users(:player_one), access: :owner)
+    policy = SharePolicy.new(users(:player_one), owner_share)
+
+    assert_not policy.update?
+    assert_not policy.destroy?
+  end
+
+  test "admin cannot update or destroy an owner share" do
+    owner_share = @document.shares.find_by!(user: users(:player_one), access: :owner)
+    policy = SharePolicy.new(users(:admin), owner_share)
+
+    assert_not policy.update?
+    assert_not policy.destroy?
+  end
+
+  test "neither admin or owner can create an owner share" do
+    owner_share = Share.new(shareable: @document, user: users(:player_two), access: :owner)
+
+    assert_not SharePolicy.new(users(:player_one), owner_share).create?
+    assert_not SharePolicy.new(users(:admin), owner_share).create?
+  end
+
+  test "neither admin or owner can promote a share to owner" do
+    share = @document.shares.create!(user: users(:player_two), access: :viewer)
+    share.assign_attributes(access: :owner)
+
+    assert_not SharePolicy.new(users(:player_one), share).update?
+    assert_not SharePolicy.new(users(:admin), share).update?
+  end
 end
