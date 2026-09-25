@@ -1,6 +1,3 @@
-<p style="color: green"><%= notice %></p>
-<p style="color: red"><%= alert %></p>
-
 <% content_for :title, @entry.title %>
 
 <h1><%= @entry.title %></h1>
@@ -11,9 +8,9 @@
 
 <%= render "shares/controls", shareable: @entry %>
 
-<div>
-  <%= link_to "Edit this entry", edit_entry_path(@entry) if policy(@entry).edit? %>
-  <%= link_to "Back to entries", entries_path %>
+<div class="d-flex flex-wrap gap-2 mt-3">
+  <%= link_to "Edit this entry", edit_entry_path(@entry), class: "btn btn-outline-primary" if policy(@entry).edit? %>
+  <%= link_to "Back to entries", entries_path, class: "btn btn-outline-secondary" %>
 
-  <%= button_to "Destroy this entry", @entry, method: :delete if policy(@entry).destroy? %>
+  <%= button_to "Destroy this entry", @entry, method: :delete, class: "btn btn-outline-danger" if policy(@entry).destroy? %>
 </div>

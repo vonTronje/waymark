@@ -1,15 +1,12 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Characters" %>
 
-<h1>Characters</h1>
-
-<div id="characters">
-  <% @characters.each do |character| %>
-    <p>
-      <%= link_to character.name, character %>
-    </p>
-  <% end %>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="mb-0">Characters</h1>
+  <%= link_to "New character", new_character_path, class: "btn btn-primary" %>
 </div>
 
-<%= link_to "New character", new_character_path %>
+<div id="characters" class="list-group">
+  <% @characters.each do |character| %>
+    <%= link_to character.name, character, class: "list-group-item list-group-item-action" %>
+  <% end %>
+</div>

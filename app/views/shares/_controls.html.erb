@@ -1,35 +1,35 @@
 <% if policy(shareable).share? %>
-  <section id="shares">
-    <h2>Sharing</h2>
+  <section id="shares" class="mt-4">
+    <h2 class="h4">Sharing</h2>
 
-    <div id="share-list">
+    <div id="share-list" class="d-flex flex-column gap-3 mb-3">
       <% shareable.non_owner_access.each do |share| %>
-        <div id="<%= dom_id(share) %>">
-          <span><%= share.user.name %></span>
+        <div id="<%= dom_id(share) %>" class="d-flex flex-wrap align-items-center gap-2">
+          <span class="me-2"><%= share.user.name %></span>
 
-          <%= form_with model: share, url: [ shareable, share ] do |form| %>
-            <%= form.select :access, [["Viewer", "viewer"], ["Editor", "editor"]] %>
-            <%= form.submit "Update access" %>
+          <%= form_with model: share, url: [ shareable, share ], html: { class: "d-flex flex-wrap align-items-center gap-2" } do |form| %>
+            <%= form.select :access, [["Viewer", "viewer"], ["Editor", "editor"]], {}, class: "form-select form-select-sm w-auto" %>
+            <%= form.submit "Update access", class: "btn btn-sm btn-outline-primary" %>
           <% end %>
 
-          <%= button_to "Remove", [ shareable, share ], method: :delete %>
+          <%= button_to "Remove", [ shareable, share ], method: :delete, class: "btn btn-sm btn-outline-danger" %>
         </div>
       <% end %>
     </div>
 
     <% users_without_access = User.without_access(shareable) %>
     <% if users_without_access.any? %>
-      <h3>Add share</h3>
+      <h3 class="h5">Add share</h3>
       <%= form_with model: Share.new, url: [ shareable, Share.new ] do |form| %>
-        <div>
-          <%= form.label :user_id, "User" %>
-          <%= form.collection_select :user_id, users_without_access, :id, :name %>
+        <div class="mb-3">
+          <%= form.label :user_id, "User", class: "form-label" %>
+          <%= form.collection_select :user_id, users_without_access, :id, :name, {}, class: "form-select" %>
         </div>
-        <div>
-          <%= form.label :access, "Access" %>
-          <%= form.select :access, [["Viewer", "viewer"], ["Editor", "editor"]] %>
+        <div class="mb-3">
+          <%= form.label :access, "Access", class: "form-label" %>
+          <%= form.select :access, [["Viewer", "viewer"], ["Editor", "editor"]], {}, class: "form-select" %>
         </div>
-        <%= form.submit "Share" %>
+        <%= form.submit "Share", class: "btn btn-primary btn-sm" %>
       <% end %>
     <% end %>
   </section>

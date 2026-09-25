@@ -1,9 +1,9 @@
 <%= form_with(model: entry) do |form| %>
   <% if entry.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(entry.errors.count, "error") %> prohibited this entry from being saved:</h2>
+    <div class="alert alert-danger">
+      <h2 class="h5"><%= pluralize(entry.errors.count, "error") %> prohibited this entry from being saved:</h2>
 
-      <ul>
+      <ul class="mb-0">
         <% entry.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
@@ -11,17 +11,17 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+  <div class="mb-3">
+    <%= form.label :title, class: "form-label" %>
+    <%= form.text_field :title, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :description, style: "display: block" %>
+  <div class="mb-3">
+    <%= form.label :description, class: "form-label" %>
     <%= form.rich_text_area :description %>
   </div>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>
