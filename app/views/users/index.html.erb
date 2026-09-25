@@ -1,16 +1,17 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Users" %>
 
-<h1>Users</h1>
-
-<div id="users">
-  <% @users.each do |user| %>
-    <%= render user %>
-    <p>
-      <%= link_to "Show this user", user %>
-    </p>
-  <% end %>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="mb-0">Users</h1>
+  <%= link_to "New user", new_user_path, class: "btn btn-primary" if policy(User).new? %>
 </div>
 
-<%= link_to "New user", new_user_path if policy(User).new? %>
+<div id="users" class="list-group">
+  <% @users.each do |user| %>
+    <div class="list-group-item">
+      <%= render user %>
+      <p class="mb-0 mt-2">
+        <%= link_to "Show this user", user %>
+      </p>
+    </div>
+  <% end %>
+</div>

@@ -1,15 +1,12 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Entries" %>
 
-<h1>Entries</h1>
-
-<div id="entries">
-  <% @entries.each do |entry| %>
-    <p>
-      <%= link_to entry.title, entry %>
-    </p>
-  <% end %>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="mb-0">Entries</h1>
+  <%= link_to "New entry", new_entry_path, class: "btn btn-primary" %>
 </div>
 
-<%= link_to "New entry", new_entry_path %>
+<div id="entries" class="list-group">
+  <% @entries.each do |entry| %>
+    <%= link_to entry.title, entry, class: "list-group-item list-group-item-action" %>
+  <% end %>
+</div>

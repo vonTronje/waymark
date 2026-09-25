@@ -1,5 +1,5 @@
 <% access = shareable.access_for(Current.user) %>
 <% access = "admin" if access.blank? && Current.user&.admin? %>
 <% if access.present? %>
-  <p class="access-badge"><%= access %></p>
+  <p class="access-badge badge text-bg-secondary"><%= access %></p>
 <% end %>

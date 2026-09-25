@@ -1,9 +1,7 @@
-<p style="color: green"><%= notice %></p>
-
 <%= render @user %>
 
-<div>
-  <%= link_to "Edit this user", edit_user_path(@user) if policy(@user).edit? %>
+<div class="d-flex flex-wrap gap-2 mt-3">
+  <%= link_to "Edit this user", edit_user_path(@user), class: "btn btn-outline-primary" if policy(@user).edit? %>
 
-  <%= button_to "Destroy this user", @user, method: :delete if policy(@user).destroy? %>
+  <%= button_to "Destroy this user", @user, method: :delete, class: "btn btn-outline-danger" if policy(@user).destroy? %>
 </div>

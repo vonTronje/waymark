@@ -1,6 +1,3 @@
-<p style="color: green"><%= notice %></p>
-<p style="color: red"><%= alert %></p>
-
 <% content_for :title, @character.name %>
 
 <h1><%= @character.name %></h1>
@@ -8,16 +5,16 @@
 <%= render "shares/access_badge", shareable: @character %>
 
 <% if @character.image.attached? %>
-  <p><%= image_tag @character.image %></p>
+  <p><%= image_tag @character.image, class: "img-fluid", style: "max-width: 320px;" %></p>
 <% end %>
 
 <p>Level <%= @character.level %> <%= @character.character_class %> (<%= @character.species %>)</p>
 
 <%= render "shares/controls", shareable: @character %>
 
-<div>
-  <%= link_to "Edit this character", edit_character_path(@character) if policy(@character).edit? %>
-  <%= link_to "Back to characters", characters_path %>
+<div class="d-flex flex-wrap gap-2 mt-3">
+  <%= link_to "Edit this character", edit_character_path(@character), class: "btn btn-outline-primary" if policy(@character).edit? %>
+  <%= link_to "Back to characters", characters_path, class: "btn btn-outline-secondary" %>
 
-  <%= button_to "Destroy this character", @character, method: :delete if policy(@character).destroy? %>
+  <%= button_to "Destroy this character", @character, method: :delete, class: "btn btn-outline-danger" if policy(@character).destroy? %>
 </div>

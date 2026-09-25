@@ -4,9 +4,7 @@
 
 <%= render "form", entry: @entry %>
 
-<br>
-
-<div>
-  <%= link_to "Show this entry", @entry %>
-  <%= link_to "Back to entries", entries_path %>
+<div class="d-flex flex-wrap gap-2 mt-3">
+  <%= link_to "Show this entry", @entry, class: "btn btn-outline-secondary" %>
+  <%= link_to "Back to entries", entries_path, class: "btn btn-outline-secondary" %>
 </div>

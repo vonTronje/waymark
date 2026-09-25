@@ -4,9 +4,7 @@
 
 <%= render "form", character: @character %>
 
-<br>
-
-<div>
-  <%= link_to "Show this character", @character %>
-  <%= link_to "Back to characters", characters_path %>
+<div class="d-flex flex-wrap gap-2 mt-3">
+  <%= link_to "Show this character", @character, class: "btn btn-outline-secondary" %>
+  <%= link_to "Back to characters", characters_path, class: "btn btn-outline-secondary" %>
 </div>
