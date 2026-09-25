@@ -1,11 +1,31 @@
 require "test_helper"
 
+# Behavior is tested with Entry as an example Shareable; Shareable.registry + routing assertions below
+# cover other shareables without duplicating this suite per model.
 class SharesControllerTest < ActionDispatch::IntegrationTest
   setup do
     @player_one = users(:player_one)
     @player_two = users(:player_two)
     @entry = entries(:player_one_character_notes)
     sign_in_as @player_one
+  end
+
+  test "every Shareable model has nested shares routes" do
+    Rails.application.eager_load! unless Rails.application.config.eager_load
+
+    assert_operator Shareable.registry.size, :>, 0
+
+    Shareable.registry.each do |klass|
+      key = :"#{klass.model_name.param_key}_id"
+      shares_path = "/#{klass.model_name.route_key}/1/shares"
+
+      assert_routing({ path: shares_path, method: :post },
+                     { controller: "shares", action: "create", key => "1" })
+      assert_routing({ path: "#{shares_path}/2", method: :patch },
+                     { controller: "shares", action: "update", key => "1", id: "2" })
+      assert_routing({ path: "#{shares_path}/2", method: :delete },
+                     { controller: "shares", action: "destroy", key => "1", id: "2" })
+    end
   end
 
   test "owner can create a viewer share" do

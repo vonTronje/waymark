@@ -1,8 +1,4 @@
 class SharesController < ApplicationController
-  SHAREABLES = {
-    "entry_id" => Entry
-  }.freeze
-
   skip_after_action :verify_policy_scoped
 
   before_action :set_shareable
@@ -38,10 +34,10 @@ class SharesController < ApplicationController
 
   private
     def set_shareable
-      param_key, klass = SHAREABLES.find { |key, _| params[key].present? }
-      raise ActiveRecord::RecordNotFound, "Unknown shareable" unless param_key
+      klass = Shareable.registry.find { |model| params["#{model.model_name.param_key}_id"].present? }
+      raise ActiveRecord::RecordNotFound, "Unknown shareable" unless klass
 
-      @shareable = klass.find(params[param_key])
+      @shareable = klass.find(params["#{klass.model_name.param_key}_id"])
     end
 
     def set_share
