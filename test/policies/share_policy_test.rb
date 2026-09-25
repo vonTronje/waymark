@@ -2,6 +2,7 @@ require "test_helper"
 
 class SharePolicyTest < ActiveSupport::TestCase
   class ShareableTestDocument < ApplicationRecord
+    def self.skip_shareable_registration? = true
     include Shareable
   end
 
