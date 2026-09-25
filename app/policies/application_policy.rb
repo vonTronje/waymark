@@ -35,7 +35,7 @@ class ApplicationPolicy
   end
 
   def share?
-    record.is_a?(Authorizable) && access?(:owner)
+    record.is_a?(Shareable) && access?(:owner)
   end
 
   class Scope

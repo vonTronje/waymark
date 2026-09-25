@@ -1,23 +1,23 @@
 require "test_helper"
 
 class SharePolicyTest < ActiveSupport::TestCase
-  class AuthorizableTestDocument < ApplicationRecord
-    include Authorizable
+  class ShareableTestDocument < ApplicationRecord
+    include Shareable
   end
 
   setup do
-    ActiveRecord::Base.connection.create_table :authorizable_test_documents, force: true do |t|
+    ActiveRecord::Base.connection.create_table :shareable_test_documents, force: true do |t|
       t.string :title
     end
-    AuthorizableTestDocument.reset_column_information
+    ShareableTestDocument.reset_column_information
 
     Current.session = users(:player_one).sessions.create!
-    @document = AuthorizableTestDocument.create!(title: "Notes")
+    @document = ShareableTestDocument.create!(title: "Notes")
     @share = Share.new(shareable: @document, user: users(:player_two), access: :viewer)
   end
 
   teardown do
-    ActiveRecord::Base.connection.drop_table :authorizable_test_documents, if_exists: true
+    ActiveRecord::Base.connection.drop_table :shareable_test_documents, if_exists: true
   end
 
   test "owner can create, update, and destroy shares" do

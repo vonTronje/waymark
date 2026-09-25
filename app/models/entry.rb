@@ -1,5 +1,5 @@
 class Entry < ApplicationRecord
-  include Authorizable
+  include Shareable
 
   has_rich_text :description
 

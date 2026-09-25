@@ -1,4 +1,4 @@
-module Authorizable
+module Shareable
   extend ActiveSupport::Concern
 
   included do
