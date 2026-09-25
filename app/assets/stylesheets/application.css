@@ -13,3 +13,14 @@
 trix-editor {
   margin-bottom: 0;
 }
+
+.sharing-toggle-icon {
+  display: inline-block;
+  font-size: 0.65em;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.sharing-toggle[aria-expanded="true"] .sharing-toggle-icon {
+  transform: rotate(180deg);
+}
