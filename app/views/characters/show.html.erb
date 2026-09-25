@@ -1,14 +1,12 @@
 <% content_for :title, @character.name %>
 
 <h1><%= @character.name %></h1>
-
-<%= render "shares/access_badge", shareable: @character %>
+<p>Level <%= @character.level %> <%= @character.character_class %> </p>
+<p><%= @character.species %></p>
 
 <% if @character.image.attached? %>
   <p><%= image_tag @character.image, class: "img-fluid", style: "max-width: 320px;" %></p>
 <% end %>
-
-<p>Level <%= @character.level %> <%= @character.character_class %> (<%= @character.species %>)</p>
 
 <%= render "shares/controls", shareable: @character %>
 
