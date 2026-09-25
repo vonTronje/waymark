@@ -11,6 +11,7 @@ class EntriesSharingTest < ApplicationSystemTestCase
     assert_current_path user_path(users(:player_one))
 
     visit entry_path(entry)
+    click_on "Sharing"
     assert_selector ".access-badge", text: "owner"
 
     within "#shares" do
@@ -20,6 +21,7 @@ class EntriesSharingTest < ApplicationSystemTestCase
     end
 
     assert_text "Share was successfully created."
+    click_on "Sharing"
     assert_text "Player Two"
 
     click_on "Log out"
@@ -31,6 +33,7 @@ class EntriesSharingTest < ApplicationSystemTestCase
     assert_current_path user_path(users(:player_two))
 
     visit entry_path(entry)
+    click_on "Sharing"
     assert_selector ".access-badge", text: "viewer"
     assert_no_selector "#shares"
     assert_no_link "Edit this entry"
