@@ -1,32 +1,40 @@
-<% if policy(shareable).share? %>
-  <section id="shares" class="mt-4">
-    <h2 class="h4">Sharing</h2>
+<section class="sharing">
+  <h2 class="h4 mb-3">Sharing</h2>
 
-    <div id="share-list" class="d-flex flex-column gap-3 mb-3">
-      <% shareable.non_owner_access.each do |share| %>
-        <div id="<%= dom_id(share) %>" class="d-flex flex-wrap align-items-center gap-2">
-          <span class="me-2"><%= share.user.name %></span>
+  <h3 class="h6 mb-1">Access</h3>
+  <div class="mb-3">
+    <%= render "shares/access_badge", shareable: shareable %>
+  </div>
 
-          <%= form_with model: share, url: [ shareable, share ], html: { class: "d-flex flex-wrap align-items-center gap-2" } do |form| %>
-            <%= form.select :access, [["Viewer", "viewer"], ["Editor", "editor"]], {}, class: "form-select form-select-sm w-auto" %>
-            <%= form.submit "Update access", class: "btn btn-sm btn-outline-primary" %>
-          <% end %>
+  <% if policy(shareable).share? %>
+    <div id="shares">
+      <h3 class="h6 mb-2">Shared with</h3>
+      <div id="share-list" class="d-flex flex-column gap-2 mb-3">
+        <% shareable.non_owner_access.each do |share| %>
+          <div id="<%= dom_id(share) %>" class="d-flex flex-wrap align-items-center gap-2">
+            <span class="me-2"><%= share.user.name %></span>
 
-          <%= button_to "Remove", [ shareable, share ], method: :delete, class: "btn btn-sm btn-outline-danger" %>
-        </div>
+            <%= form_with model: share, url: [ shareable, share ], html: { class: "d-flex flex-wrap align-items-center gap-2" } do |form| %>
+              <%= form.select :access, [["Viewer", "viewer"], ["Editor", "editor"]], {}, class: "form-select form-select-sm w-auto" %>
+              <%= form.submit "Update access", class: "btn btn-sm btn-outline-primary" %>
+            <% end %>
+
+            <%= button_to "Remove", [ shareable, share ], method: :delete, class: "btn btn-sm btn-outline-danger" %>
+          </div>
+        <% end %>
+      </div>
+
+      <% users_without_access = User.without_access(shareable) %>
+      <% if users_without_access.any? %>
+        <h3 class="h6 mb-2">Share</h3>
+        <%= form_with model: Share.new, url: [ shareable, Share.new ], html: { class: "d-flex flex-wrap align-items-center gap-2" } do |form| %>
+          <%= form.label :user_id, "User", class: "col-form-label col-form-label-sm mb-0" %>
+          <%= form.collection_select :user_id, users_without_access, :id, :name, {}, class: "form-select form-select-sm w-auto" %>
+          <%= form.label :access, "Access", class: "col-form-label col-form-label-sm mb-0" %>
+          <%= form.select :access, [["Viewer", "viewer"], ["Editor", "editor"]], {}, class: "form-select form-select-sm w-auto" %>
+          <%= form.submit "Share", class: "btn btn-primary btn-sm" %>
+        <% end %>
       <% end %>
     </div>
-
-    <% users_without_access = User.without_access(shareable) %>
-    <% if users_without_access.any? %>
-      <h3 class="h5">Add share</h3>
-      <%= form_with model: Share.new, url: [ shareable, Share.new ], html: { class: "d-flex flex-wrap align-items-center gap-2" } do |form| %>
-        <%= form.label :user_id, "User", class: "col-form-label col-form-label-sm mb-0" %>
-        <%= form.collection_select :user_id, users_without_access, :id, :name, {}, class: "form-select form-select-sm w-auto" %>
-        <%= form.label :access, "Access", class: "col-form-label col-form-label-sm mb-0" %>
-        <%= form.select :access, [["Viewer", "viewer"], ["Editor", "editor"]], {}, class: "form-select form-select-sm w-auto" %>
-        <%= form.submit "Share", class: "btn btn-primary btn-sm" %>
-      <% end %>
-    <% end %>
-  </section>
-<% end %>
+  <% end %>
+</section>
