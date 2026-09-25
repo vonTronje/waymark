@@ -1,0 +1,23 @@
+player_one_character:
+  name: Aria Stormwind
+  level: 5
+  character_class: Wizard
+  species: Elf
+
+player_two_character:
+  name: Borin Ironfist
+  level: 4
+  character_class: Fighter
+  species: Dwarf
+
+npc_one:
+  name: Village Guide
+  level: 2
+  character_class: Commoner
+  species: Human
+
+npc_secret:
+  name: Hidden Assassin
+  level: 8
+  character_class: Rogue
+  species: Tiefling

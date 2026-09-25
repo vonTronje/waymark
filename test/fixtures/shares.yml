@@ -27,3 +27,38 @@ player_two_secret_owner:
   user: player_two
   shareable: player_two_secret (Entry)
   access: owner
+
+player_one_character_owner:
+  user: player_one
+  shareable: player_one_character (Character)
+  access: owner
+
+player_one_character_game_master_editor:
+  user: game_master
+  shareable: player_one_character (Character)
+  access: editor
+
+player_two_character_owner:
+  user: player_two
+  shareable: player_two_character (Character)
+  access: owner
+
+player_two_character_game_master_editor:
+  user: game_master
+  shareable: player_two_character (Character)
+  access: editor
+
+npc_one_owner:
+  user: game_master
+  shareable: npc_one (Character)
+  access: owner
+
+npc_one_player_one_viewer:
+  user: player_one
+  shareable: npc_one (Character)
+  access: viewer
+
+npc_secret_owner:
+  user: game_master
+  shareable: npc_secret (Character)
+  access: owner
