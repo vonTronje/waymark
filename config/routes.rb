@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   end
 
   resources :entries, concerns: :shareable
+  resources :characters, concerns: :shareable
   resources :users
   resource :session
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

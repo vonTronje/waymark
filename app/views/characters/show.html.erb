@@ -1,0 +1,23 @@
+<p style="color: green"><%= notice %></p>
+<p style="color: red"><%= alert %></p>
+
+<% content_for :title, @character.name %>
+
+<h1><%= @character.name %></h1>
+
+<%= render "shares/access_badge", shareable: @character %>
+
+<% if @character.image.attached? %>
+  <p><%= image_tag @character.image %></p>
+<% end %>
+
+<p>Level <%= @character.level %> <%= @character.character_class %> (<%= @character.species %>)</p>
+
+<%= render "shares/controls", shareable: @character %>
+
+<div>
+  <%= link_to "Edit this character", edit_character_path(@character) if policy(@character).edit? %>
+  <%= link_to "Back to characters", characters_path %>
+
+  <%= button_to "Destroy this character", @character, method: :delete if policy(@character).destroy? %>
+</div>
