@@ -1,18 +1,11 @@
 module Shareable
   extend ActiveSupport::Concern
 
-  mattr_accessor :registry, default: []
-
   included do
     has_many :shares, as: :shareable, dependent: :destroy
     after_create :grant_owner_share
-
-    Shareable.register(self) unless skip_shareable_registration?
   end
 
-  def self.register(klass)
-    registry << klass unless registry.include?(klass)
-  end
 
   def accessible_to?(user, as: :viewer)
     return true if user&.admin?
@@ -29,11 +22,6 @@ module Shareable
   end
 
   class_methods do
-    # Override before `include Shareable` to opt out (test doubles).
-    def skip_shareable_registration?
-      false
-    end
-
     def accessible_to(user, as: :viewer)
       return all if user.admin?
 
