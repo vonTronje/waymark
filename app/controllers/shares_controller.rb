@@ -34,10 +34,7 @@ class SharesController < ApplicationController
 
   private
     def set_shareable
-      klass = Shareable.registry.find { |model| params["#{model.model_name.param_key}_id"].present? }
-      raise ActiveRecord::RecordNotFound, "Unknown shareable" unless klass
-
-      @shareable = klass.find(params["#{klass.model_name.param_key}_id"])
+      raise NotImplementedError, "Subclass must implement this method"
     end
 
     def set_share
