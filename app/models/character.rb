@@ -1,5 +1,6 @@
 class Character < ApplicationRecord
   include Shareable
+  include Linkable
 
   has_one_attached :image
 
